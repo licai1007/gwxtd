@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwxtd.core.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.gwxtd.core.pojo.Goods" >
+    <id column="gId" property="gid" jdbcType="INTEGER" />
+    <result column="gName" property="gname" jdbcType="VARCHAR" />
+    <result column="gPrice" property="gprice" jdbcType="DOUBLE" />
+    <result column="gClass" property="gclass" jdbcType="VARCHAR" />
+    <result column="gAmount" property="gamount" jdbcType="INTEGER" />
+    <result column="gDate" property="gdate" jdbcType="TIMESTAMP" />
+    <result column="gImgUrl" property="gimgurl" jdbcType="VARCHAR" />
+    <result column="gLook" property="glook" jdbcType="INTEGER" />
+    <result column="gIntro" property="gintro" jdbcType="VARCHAR" />
+    <result column="gBrief" property="gbrief" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gwxtd.core.pojo.GoodsWithBLOBs" extends="BaseResultMap" >
+    <result column="gIntro" property="gintro" jdbcType="LONGVARCHAR" />
+    <result column="gBrief" property="gbrief" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      gId,gIntro, gName, gPrice, gClass, gAmount, gDate, gImgUrl, gLook
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <sql id="Blob_Column_List" >
+    gIntro, gBrief
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.gwxtd.core.pojo.GoodsCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goodsinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gwxtd.core.pojo.GoodsCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goodsinfo
+   	<where>
+   		<if test="gclass != null">
+   		gclass = #{gclass}
+   		</if>
+   		<if test="gname != null and gname != ''">
+   		and gname like concat('%',#{gname},'%')
+   		</if>
+   	</where>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    gId,gName,gPrice,gClass,gAmount,gDate,gImgUrl,gLook,gIntro,gBrief
+    from goodsinfo
+    where gId = #{gid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goodsinfo
+    where gId = #{gid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gwxtd.core.pojo.GoodsCriteria" >
+    delete from goodsinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gwxtd.core.pojo.GoodsWithBLOBs" >
+    insert into goodsinfo (gId, gName, gPrice, 
+      gClass, gAmount, gDate, 
+      gImgUrl, gLook, gIntro, 
+      gBrief)
+    values (#{gid,jdbcType=INTEGER}, #{gname,jdbcType=VARCHAR}, #{gprice,jdbcType=DOUBLE}, 
+      #{gclass,jdbcType=VARCHAR}, #{gamount,jdbcType=INTEGER}, #{gdate,jdbcType=TIMESTAMP}, 
+      #{gimgurl,jdbcType=VARCHAR}, #{glook,jdbcType=INTEGER}, #{gintro,jdbcType=LONGVARCHAR}, 
+      #{gbrief,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwxtd.core.pojo.GoodsWithBLOBs" >
+    insert into goodsinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gId,
+      </if>
+      <if test="gname != null" >
+        gName,
+      </if>
+      <if test="gprice != null" >
+        gPrice,
+      </if>
+      <if test="gclass != null" >
+        gClass,
+      </if>
+      <if test="gamount != null" >
+        gAmount,
+      </if>
+      <if test="gdate != null" >
+        gDate,
+      </if>
+      <if test="gimgurl != null" >
+        gImgUrl,
+      </if>
+      <if test="glook != null" >
+        gLook,
+      </if>
+      <if test="gintro != null" >
+        gIntro,
+      </if>
+      <if test="gbrief != null" >
+        gBrief,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        #{gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="gclass != null" >
+        #{gclass,jdbcType=VARCHAR},
+      </if>
+      <if test="gamount != null" >
+        #{gamount,jdbcType=INTEGER},
+      </if>
+      <if test="gdate != null" >
+        #{gdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gimgurl != null" >
+        #{gimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="glook != null" >
+        #{glook,jdbcType=INTEGER},
+      </if>
+      <if test="gintro != null" >
+        #{gintro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbrief != null" >
+        #{gbrief,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gwxtd.core.pojo.GoodsCriteria" resultType="java.lang.Integer" >
+    select count(1) from goodsinfo
+    <where>
+   		<if test="gclass != null">
+   		gclass = #{gclass}
+   		</if>
+   		<if test="gname != null and gname != ''">
+   		and gname like concat('%',#{gname},'%')
+   		</if>
+   	</where>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goodsinfo
+    <set >
+      <if test="record.gid != null" >
+        gId = #{record.gid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gname != null" >
+        gName = #{record.gname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gprice != null" >
+        gPrice = #{record.gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.gclass != null" >
+        gClass = #{record.gclass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gamount != null" >
+        gAmount = #{record.gamount,jdbcType=INTEGER},
+      </if>
+      <if test="record.gdate != null" >
+        gDate = #{record.gdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gimgurl != null" >
+        gImgUrl = #{record.gimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.glook != null" >
+        gLook = #{record.glook,jdbcType=INTEGER},
+      </if>
+      <if test="record.gintro != null" >
+        gIntro = #{record.gintro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gbrief != null" >
+        gBrief = #{record.gbrief,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update goodsinfo
+    set gId = #{record.gid,jdbcType=INTEGER},
+      gName = #{record.gname,jdbcType=VARCHAR},
+      gPrice = #{record.gprice,jdbcType=DOUBLE},
+      gClass = #{record.gclass,jdbcType=VARCHAR},
+      gAmount = #{record.gamount,jdbcType=INTEGER},
+      gDate = #{record.gdate,jdbcType=TIMESTAMP},
+      gImgUrl = #{record.gimgurl,jdbcType=VARCHAR},
+      gLook = #{record.glook,jdbcType=INTEGER},
+      gIntro = #{record.gintro,jdbcType=LONGVARCHAR},
+      gBrief = #{record.gbrief,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goodsinfo
+    set gId = #{record.gid,jdbcType=INTEGER},
+      gName = #{record.gname,jdbcType=VARCHAR},
+      gPrice = #{record.gprice,jdbcType=DOUBLE},
+      gClass = #{record.gclass,jdbcType=VARCHAR},
+      gAmount = #{record.gamount,jdbcType=INTEGER},
+      gDate = #{record.gdate,jdbcType=TIMESTAMP},
+      gImgUrl = #{record.gimgurl,jdbcType=VARCHAR},
+      gLook = #{record.glook,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwxtd.core.pojo.GoodsWithBLOBs" >
+    update goodsinfo
+    <set >
+      <if test="gname != null" >
+        gName = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        gPrice = #{gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="gclass != null" >
+        gClass = #{gclass,jdbcType=VARCHAR},
+      </if>
+      <if test="gamount != null" >
+        gAmount = #{gamount,jdbcType=INTEGER},
+      </if>
+      <if test="gdate != null" >
+        gDate = #{gdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gimgurl != null" >
+        gImgUrl = #{gimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="glook != null" >
+        gLook = #{glook,jdbcType=INTEGER},
+      </if>
+      <if test="gintro != null" >
+        gIntro = #{gintro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gbrief != null" >
+        gBrief = #{gbrief,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where gId = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gwxtd.core.pojo.GoodsWithBLOBs" >
+    update goodsinfo
+    set gName = #{gname,jdbcType=VARCHAR},
+      gPrice = #{gprice,jdbcType=DOUBLE},
+      gClass = #{gclass,jdbcType=VARCHAR},
+      gAmount = #{gamount,jdbcType=INTEGER},
+      gDate = #{gdate,jdbcType=TIMESTAMP},
+      gImgUrl = #{gimgurl,jdbcType=VARCHAR},
+      gLook = #{glook,jdbcType=INTEGER},
+      gIntro = #{gintro,jdbcType=LONGVARCHAR},
+      gBrief = #{gbrief,jdbcType=LONGVARCHAR}
+    where gId = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwxtd.core.pojo.Goods" >
+    update goodsinfo
+    set gName = #{gname,jdbcType=VARCHAR},
+      gPrice = #{gprice,jdbcType=DOUBLE},
+      gClass = #{gclass,jdbcType=VARCHAR},
+      gAmount = #{gamount,jdbcType=INTEGER},
+      gDate = #{gdate,jdbcType=TIMESTAMP},
+      gImgUrl = #{gimgurl,jdbcType=VARCHAR},
+      gLook = #{glook,jdbcType=INTEGER}
+    where gId = #{gid,jdbcType=INTEGER}
+  </update>
+  <select id="getGclass" resultType="String" >
+  	select distinct gClass from goodsinfo
+  </select>
+</mapper>

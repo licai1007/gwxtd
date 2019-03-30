@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwxtd.core.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.gwxtd.core.pojo.Order" >
+    <id column="oId" property="oid" jdbcType="INTEGER" />
+    <result column="oDate" property="odate" jdbcType="TIMESTAMP" />
+    <result column="aId" property="aid" jdbcType="INTEGER" />
+    <result column="oState" property="ostate" jdbcType="VARCHAR" />
+    <result column="oRecname" property="orecname" jdbcType="VARCHAR" />
+    <result column="oRecadr" property="orecadr" jdbcType="VARCHAR" />
+    <result column="oRectel" property="orectel" jdbcType="VARCHAR" />
+    <result column="uId" property="uid" jdbcType="INTEGER" />
+    <result column="oTotalPrice" property="ototalprice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      oId, oDate, aId, oState, oRecname, oRecadr, oRectel, uId, oTotalPrice
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gwxtd.core.pojo.OrderCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    oId,oDate,aId,oState,oRecname,oRecadr,oRectel,uId,oTotalPrice
+    from orderinfo
+    where oId = #{oid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderinfo
+    where oId = #{oid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gwxtd.core.pojo.OrderCriteria" >
+    delete from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gwxtd.core.pojo.Order" >
+    insert into orderinfo (oId, oDate, aId, 
+      oState, oRecname, oRecadr, 
+      oRectel, uId, oTotalPrice
+      )
+    values (#{oid,jdbcType=INTEGER}, #{odate,jdbcType=TIMESTAMP}, #{aid,jdbcType=INTEGER}, 
+      #{ostate,jdbcType=VARCHAR}, #{orecname,jdbcType=VARCHAR}, #{orecadr,jdbcType=VARCHAR}, 
+      #{orectel,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{ototalprice,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwxtd.core.pojo.Order" >
+    insert into orderinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oId,
+      </if>
+      <if test="odate != null" >
+        oDate,
+      </if>
+      <if test="aid != null" >
+        aId,
+      </if>
+      <if test="ostate != null" >
+        oState,
+      </if>
+      <if test="orecname != null" >
+        oRecname,
+      </if>
+      <if test="orecadr != null" >
+        oRecadr,
+      </if>
+      <if test="orectel != null" >
+        oRectel,
+      </if>
+      <if test="uid != null" >
+        uId,
+      </if>
+      <if test="ototalprice != null" >
+        oTotalPrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="odate != null" >
+        #{odate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aid != null" >
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="ostate != null" >
+        #{ostate,jdbcType=VARCHAR},
+      </if>
+      <if test="orecname != null" >
+        #{orecname,jdbcType=VARCHAR},
+      </if>
+      <if test="orecadr != null" >
+        #{orecadr,jdbcType=VARCHAR},
+      </if>
+      <if test="orectel != null" >
+        #{orectel,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="ototalprice != null" >
+        #{ototalprice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gwxtd.core.pojo.OrderCriteria" resultType="java.lang.Integer" >
+    select count(*) from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orderinfo
+    <set >
+      <if test="record.oid != null" >
+        oId = #{record.oid,jdbcType=INTEGER},
+      </if>
+      <if test="record.odate != null" >
+        oDate = #{record.odate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aid != null" >
+        aId = #{record.aid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ostate != null" >
+        oState = #{record.ostate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orecname != null" >
+        oRecname = #{record.orecname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orecadr != null" >
+        oRecadr = #{record.orecadr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orectel != null" >
+        oRectel = #{record.orectel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null" >
+        uId = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ototalprice != null" >
+        oTotalPrice = #{record.ototalprice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orderinfo
+    set oId = #{record.oid,jdbcType=INTEGER},
+      oDate = #{record.odate,jdbcType=TIMESTAMP},
+      aId = #{record.aid,jdbcType=INTEGER},
+      oState = #{record.ostate,jdbcType=VARCHAR},
+      oRecname = #{record.orecname,jdbcType=VARCHAR},
+      oRecadr = #{record.orecadr,jdbcType=VARCHAR},
+      oRectel = #{record.orectel,jdbcType=VARCHAR},
+      uId = #{record.uid,jdbcType=INTEGER},
+      oTotalPrice = #{record.ototalprice,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwxtd.core.pojo.Order" >
+    update orderinfo
+    <set >
+      <if test="odate != null" >
+        oDate = #{odate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aid != null" >
+        aId = #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="ostate != null" >
+        oState = #{ostate,jdbcType=VARCHAR},
+      </if>
+      <if test="orecname != null" >
+        oRecname = #{orecname,jdbcType=VARCHAR},
+      </if>
+      <if test="orecadr != null" >
+        oRecadr = #{orecadr,jdbcType=VARCHAR},
+      </if>
+      <if test="orectel != null" >
+        oRectel = #{orectel,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uId = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="ototalprice != null" >
+        oTotalPrice = #{ototalprice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where oId = #{oid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwxtd.core.pojo.Order" >
+    update orderinfo
+    set oDate = #{odate,jdbcType=TIMESTAMP},
+      aId = #{aid,jdbcType=INTEGER},
+      oState = #{ostate,jdbcType=VARCHAR},
+      oRecname = #{orecname,jdbcType=VARCHAR},
+      oRecadr = #{orecadr,jdbcType=VARCHAR},
+      oRectel = #{orectel,jdbcType=VARCHAR},
+      uId = #{uid,jdbcType=INTEGER},
+      oTotalPrice = #{ototalprice,jdbcType=DOUBLE}
+    where oId = #{oid,jdbcType=INTEGER}
+  </update>
+</mapper>
