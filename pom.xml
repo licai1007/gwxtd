@@ -15,7 +15,7 @@
 		<java-version>1.7</java-version>
 		<junit-version>4.8.2</junit-version>
 		<org.springframework-version>3.2.0.RELEASE</org.springframework-version>
-		<jackson-mapper-asl-version>1.9.12</jackson-mapper-asl-version>
+		<jackson-mapper-lgpl-version>1.9.12</jackson-mapper-lgpl-version>
 		<jackson-core-asl-version>1.9.12</jackson-core-asl-version>
 		<mysql-connector-java-version>5.1.8</mysql-connector-java-version>
 		<org.mybatis-version>3.2.7</org.mybatis-version>
@@ -51,9 +51,9 @@
 				<version>${org.springframework-version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${org.springframework-version}</version>
+				<groupId>com.it.custom</groupId>
+				<artifactId>spring-web-custom</artifactId>
+				<version>1.0.0.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -97,8 +97,8 @@
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-mapper-asl</artifactId>
-				<version>${jackson-mapper-asl-version}</version>
+				<artifactId>jackson-mapper-lgpl</artifactId>
+				<version>${jackson-mapper-lgpl-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
@@ -240,6 +240,11 @@
 				<groupId>fastdfs_client</groupId>
 				<artifactId>fastdfs_client</artifactId>
 				<version>1.25</version>
+			</dependency>
+			<dependency>
+    			<groupId>com.alibaba</groupId>
+    			<artifactId>fastjson</artifactId>
+    			<version>1.2.47</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
