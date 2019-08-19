@@ -34,7 +34,6 @@
 	  <tr>
 	  	<td align="right">
 	  	    <input type="button" id="bsearch" name="bsearch" value="搜索" onclick="tijiao()"/>
-	  	  </a>
 	  	</td>
 	  </tr>
 	</table>

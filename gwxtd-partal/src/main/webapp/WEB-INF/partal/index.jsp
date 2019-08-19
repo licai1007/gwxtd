@@ -31,13 +31,13 @@
           	</c:otherwise>
           </c:choose>
           </td>
-          <td rowspan="3"><jsp:include page="${pageContext.request.contextPath}/goods/splist.html"/></td>
+          <td rowspan="3"><jsp:include page="/goods/splist.html"/></td>
         </tr>
         <tr>
           <td height="50"><%@ include file="spsearch.jsp" %></td>
         </tr>
         <tr>
-          <td valign="top"><jsp:include page="${pageContext.request.contextPath}/spclass.html"/></td>
+          <td valign="top"><jsp:include page="/spclass.html"/></td>
         </tr>
       </table>
     </center>
