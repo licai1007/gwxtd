@@ -51,26 +51,8 @@ public class UserServiceImpl implements UserService {
 		userCriteria.createCriteria().andUnameEqualTo(uname);
 		user.setUpwd(MD5Utils.md5(user.getUpwd()));
 		int i = userMapper.updateByExampleSelective(user,userCriteria);
-		return (i==1)?true:false;
+		return i==1;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 }
