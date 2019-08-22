@@ -121,7 +121,7 @@
       #{orectel,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{ototalprice,jdbcType=DOUBLE}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.gwxtd.core.pojo.Order" >
+  <insert id="insertSelective" parameterType="com.gwxtd.core.pojo.Order" useGeneratedKeys="true" keyProperty="oid">
     insert into orderinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="oid != null" >

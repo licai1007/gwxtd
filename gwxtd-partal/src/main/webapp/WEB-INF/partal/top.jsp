@@ -13,7 +13,7 @@
       &nbsp;
      <a href="${pageContext.request.contextPath}/index.html">首页</a>&nbsp;&nbsp;&nbsp;
      <img src="${pageContext.request.contextPath}/res/img/other/cart.gif"/>
-     <a href="cart.jsp">购物车</a>
+     <a href="${pageContext.request.contextPath}/cart/shopping.html">购物车</a>
     </td>
   </tr>
 </table>

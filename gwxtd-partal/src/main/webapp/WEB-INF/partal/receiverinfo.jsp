@@ -1,20 +1,7 @@
-<%@ page contentType="text/html;charset=gb2312" %>
-<% 
-	if(session.getAttribute("user")==null)
-	{
-		String msg = "<h1>ÇëÄãÏÈµÇÂ½!!!</h1><a href='index.jsp'>[µÇÂ¼]</a>";
-		request.setAttribute("msg",msg);
-		String url = "/error.jsp";
-		ServletContext sc = getServletContext(); 
-		RequestDispatcher rd = sc.getRequestDispatcher(url); 
-		rd.forward(request,response);
-	}
-	else
-	{
- %>
+<%@ page contentType="text/html;charset=utf-8" %>
 <html>
   <head>
-    <title>¶©µ¥ĞÅÏ¢</title>
+    <title>æ”¶è´§åœ°å€</title>
     <script language="javascript" src="script/trim.js"></script>
     <script language="javascript">
       function checkMsg()
@@ -24,17 +11,17 @@
       	var rectel = document.mfrec.rectel.value;
       	if(recname.trim()=="")
       	{
-      		alert("ÊÕ»õÈË²»ÄÜÎª¿Õ!!!");
+      		alert("æ”¶è´§äººä¸èƒ½ä¸ºç©º!!!");
       		return;
       	}
       	if(recadr.trim()=="")
       	{
-      		alert("ÊÕ»õÈËµØÖ·²»ÄÜÎª¿Õ!!!");
+      		alert("æ”¶è´§äººåœ°å€ä¸èƒ½ä¸ºç©º!!!");
       		return;
       	}
       	if(rectel.trim()=="")
       	{
-      		alert("µç»°ºÅÂë²»ÄÜÎª¿Õ!!!");
+      		alert("ç”µè¯å·ç ä¸èƒ½ä¸ºç©º!!!");
       		return;
       	}
       	document.mfrec.submit();
@@ -42,51 +29,45 @@
     </script>
   </head>
   <body>
-    <center>
       <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
           <td><%@ include file="top.jsp" %></td>
         </tr>
         <tr>
           <td>
-            <center>
+          	<center>
             <table>
-              <caption><b><br/>ÊÕ»õÈËĞÅÏ¢</b></caption>
-              <form action="CartServlet" method="post" name="mfrec">
+              <caption><b><br/>æ”¶è´§äººä¿¡æ¯</b></caption>
+              <form action="${pageContext.request.contextPath}/order/orderconfirm.html" method="post" name="mfrec">
                 <tr>
-                  <td><br/>ÊÕ»õÈËĞÕÃû:</td>
-                  <td><br/><input name="recname"/></td>
+                  <td><br/>æ”¶è´§äººå§“å:</td>
+                  <td><br/><input type="text" name="recname"/></td>
                 </tr>
                 <tr>
-                  <td><br/>ÊÕ»õÈËµØÖ·:</td>
-                  <td><br/><input name="recadr"/></td>
+                  <td><br/>æ”¶è´§äººåœ°å€:</td>
+                  <td><br/><input type="text" name="recadr"/></td>
                 </tr>
                 <tr>
-                  <td><br/>ÊÕ»õÈËµç»°:</td>
-                  <td><br/><input name="rectel"/></td>
+                  <td><br/>æ”¶è´§äººç”µè¯:</td>
+                  <td><br/><input type="text" name="rectel"/></td>
                 </tr>
                 <tr>
                   <td align="center" colspan="2">
                     <font color="red" size="">
-                      <br/>ÇëÄãÎñ±ØÌîĞ´ÕıÈ·µÄĞÅÏ¢,ÒÔ±£Ö¤ÄãµÄ»õÎïÄÜË³ÀûÊÕµ½.
+                      <br/>è¯·ä½ åŠ¡å¿…å¡«å†™æ­£ç¡®çš„ä¿¡æ¯,ä»¥ä¿è¯ä½ çš„è´§ç‰©èƒ½é¡ºåˆ©æ”¶åˆ°.
                     </font>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2" align="right">
-                  	<input type="hidden" name="action" value="saveRec"/>
-                    <br/><input type="button" value="È·ÈÏ" onclick="checkMsg()"/>
+                    <br/><input type="button" value="ç¡®è®¤" onclick="checkMsg()"/>
                   </td>
                 </tr>
               </form>
-            </table>            
+            </table>
             </center>
           </td>
         </tr>
       </table>
-    </center>
   </body>
 </html>
-<% 
-	}
- %>

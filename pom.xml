@@ -15,8 +15,6 @@
 		<java-version>1.7</java-version>
 		<junit-version>4.8.2</junit-version>
 		<org.springframework-version>3.2.0.RELEASE</org.springframework-version>
-		<jackson-mapper-lgpl-version>1.9.12</jackson-mapper-lgpl-version>
-		<jackson-core-asl-version>1.9.12</jackson-core-asl-version>
 		<mysql-connector-java-version>5.1.8</mysql-connector-java-version>
 		<org.mybatis-version>3.2.7</org.mybatis-version>
 		<org.mybatis-spring-version>1.2.2</org.mybatis-spring-version>
@@ -96,14 +94,9 @@
 				<version>${org.springframework-version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-mapper-lgpl</artifactId>
-				<version>${jackson-mapper-lgpl-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-core-asl</artifactId>
-				<version>${jackson-core-asl-version}</version>
+    			<groupId>com.fasterxml.jackson.core</groupId>
+    			<artifactId>jackson-databind</artifactId>
+    			<version>2.9.8</version>
 			</dependency>
 			<dependency>
 				<groupId>org.freemarker</groupId>

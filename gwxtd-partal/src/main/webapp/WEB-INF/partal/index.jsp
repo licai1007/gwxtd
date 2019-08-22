@@ -6,7 +6,6 @@
   </head>
   <link href="${pageContext.request.contextPath}/res/css/generalstyle.css" type="text/css" rel="stylesheet">
   <body>
-    <center>
       <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
         <tr height="100">
           <td colspan="2" align="center"><%@ include file="top.jsp" %></td>
@@ -18,7 +17,7 @@
               <%@ include file="login.jsp" %>
             </c:when>
             <c:otherwise>
-             	<table border='0' bgcolor='#FFF0E1' width='80%' height='150'>
+             	<table border='0' bgcolor='#FFF0E1' width='80%' height='80'>
 	             	<tr align='center' height='80'>
 		             	<td>
 			             	${ur.uname}你好,<br/>
@@ -40,6 +39,5 @@
           <td valign="top"><jsp:include page="/spclass.html"/></td>
         </tr>
       </table>
-    </center>
   </body>
 </html>

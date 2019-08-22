@@ -51,8 +51,18 @@ public class Goods implements Serializable {
      * 商品简介
      */
     private String gbrief;
+    //购买数量
+    private Integer buynum;
+    
+    public Integer getBuynum() {
+		return buynum;
+	}
 
-    private static final long serialVersionUID = 1L;
+	public void setBuynum(Integer buynum) {
+		this.buynum = buynum;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public Integer getGid() {
         return gid;

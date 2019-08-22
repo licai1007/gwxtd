@@ -1,8 +1,27 @@
 <%@ page contentType="text/html;charset=utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
   <head>
     <title>物品详细信息</title>
     <link href="${pageContext.request.contextPath}/res/css/generalstyle.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/res/script/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#buy').click(function(){
+				$.ajax({
+					url:"${pageContext.request.contextPath}/cart/addToCart.html",
+					data:{"gid":'${goods.gid}'},
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						if(result.stocknum!=''){
+							alert(result.stocknum);
+						}
+					}
+				});
+			});
+		});
+	</script>
   </head>
   <body>
     <table width="100%">
@@ -11,7 +30,6 @@
       </tr>
       <tr>
         <td>
-          <center>
           <table width="80%">
           	<tr>
               <td><img src="${pageContext.request.contextPath}/res/${goods.gimgurl}" height="150" border="1"/></td>
@@ -34,9 +52,16 @@
 			      </tr>
 			      <tr>
                     <td>
-                      <a href="#">
-                        <img src="${pageContext.request.contextPath}/res/img/other/buy.gif" border="0"/>
-                      </a>
+                      <c:choose>
+        				<c:when test="${goods.gamount>0}">
+	            			<a id="buy" href="#">	
+	            				<img src="${pageContext.request.contextPath}/res/img/other/buy.gif" border="0"/>
+	            			</a>
+          				</c:when>
+          				<c:otherwise>
+          					<font style="color:red;">缺货</font>
+          				</c:otherwise>
+        			   </c:choose>
                     </td>
                   </tr>
                 </table>
@@ -56,7 +81,6 @@
           		</td>
           	</tr>
           </table>
-          </center>
         </td>
       </tr>
     </table>

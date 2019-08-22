@@ -9,12 +9,27 @@
 			$('#changePage').change(function(){
 				window.location.href="${pageContext.request.contextPath}/goods/splist.html?pageNumber="+$('#changePage').val()+"&gclass=${gclass}&tsearch=${gname}";
 			});
+			$('.buy').click(function(){
+				var index = $(this).attr("value");
+				var param = $('#goodsId'+index).val();
+				$.ajax({
+					url:"${pageContext.request.contextPath}/cart/addToCart.html",
+					data:{"gid":param},
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						if(result.stocknum!=''){
+							alert(result.stocknum);
+						}
+					}
+				});
+			});
 		});
 	</script>
 </head>
 <body>
 <table border="0" width="100%">
-<c:forEach items="${pageInfo.list}" var="goods">
+<c:forEach items="${pageInfo.list}" var="goods" varStatus="vars">
   <tr height="160">
     <td width="150" align="center">
       <a href="${pageContext.request.contextPath}/goods/goodsdetail.html?gid=${goods.gid}">
@@ -44,12 +59,13 @@
         <td>
         <c:choose>
         	<c:when test="${goods.gamount>0}">
-	            <a href="<%-- CartServlet?action=buy&flag=0&gid=${goods.gid} --%>">
-	              <img src="${pageContext.request.contextPath}/res/img/other/buy.gif" border="0"/>
+	            <a class="buy" href="#" value="${vars.index}">
+	            	<input id="goodsId${vars.index}" type="hidden" value="${goods.gid}"/>	
+	            	<img src="${pageContext.request.contextPath}/res/img/other/buy.gif" border="0"/>
 	            </a>
           	</c:when>
           	<c:otherwise>
-          		<font>缺货</font>
+          		<font style="color:red;">缺货</font>
           	</c:otherwise>
         </c:choose>
         </td>

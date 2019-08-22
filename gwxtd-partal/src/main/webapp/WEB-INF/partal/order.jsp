@@ -1,44 +1,10 @@
-<%@ page contentType="text/html;charset=gb2312" %>
-<% 
-	String[] recMsg = (String[])session.getAttribute("recMsg");
-	if(recMsg==null)
-	{
-		response.sendRedirect("index.jsp");
-	}
-	else
-	{
- %>
+<%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
   <head>
-    <title>¶©µ¥È·ÈÏ</title>
-    <script language="javascript" src="script/trim.js"></script>
-    <script language="javascript">
-      function checkMsg()
-      {
-      	var recname = document.mfrec.recname.value;
-      	var recadr = document.mfrec.recadr.value;
-      	var rectel = document.mfrec.rectel.value;
-      	if(recname.trim()=="")
-      	{
-      		alert("ÊÕ»õÈË²»ÄÜÎª¿Õ!!!");
-      		return;
-      	}
-      	if(recadr.trim()=="")
-      	{
-      		alert("ÊÕ»õÈËµØÖ·²»ÄÜÎª¿Õ!!!");
-      		return;
-      	}
-      	if(rectel.trim()=="")
-      	{
-      		alert("µç»°ºÅÂë²»ÄÜÎª¿Õ!!!");
-      		return;
-      	}
-      	document.mfrec.submit();
-      }
-    </script>
+    <title>è®¢å•ç¡®è®¤</title>
   </head>
   <body>
-    <center>
       <table width="100%">
         <tr>
           <td><%@ include file="top.jsp" %></td>
@@ -48,60 +14,42 @@
             <center>
             <table width="80%">
               <tr>
- 	        	<th>ÉÌÆ·Ãû³Æ</th>
-	        	<th>ÉÌÆ·¼Û¸ñ</th>
-	        	<th>ÉÌÆ·ÊıÁ¿</th>
+ 	        	<th>å•†å“åç§°</th>
+	        	<th>å•†å“ä»·æ ¼</th>
+	        	<th>å•†å“æ•°é‡</th>
               </tr>
-			<%-- <% 
-				int i = 0;
-				for(String[] arr:)
-				{
-					i++;
-					if(i%2==0)
-					{
-						out.println("<tr align='center'>");
-					}
-					else
-					{
-						out.println("<tr align='center' bgcolor='#F5F9FE'>");
-					}
-			%> --%>
-				  <td><%=  %></td>
-				  <td>£¤<%=  %></td>
-				  <td><%=  %></td>
+              <c:forEach items="${cartList}" var="item" varStatus="vs">
+              	<c:choose>
+	      	 		<c:when test="${vs.index%2==0}">
+	      	 			<tr align='center' bgcolor="#F5F9FE">
+	      	 		</c:when>
+	      	 		<c:otherwise>
+	      	 			<tr align='center'>
+	      	 		</c:otherwise>
+			      </c:choose>
+				  <td>${item.gname}</td>
+				  <td>ï¿¥${item.gprice}</td>
+				  <td>${item.buynum}</td>
 				</tr>
-			<% 
-				}
-			 %>
-			   <tr>
-			     <td colspan="3" align="right"><b>ÉÌÆ·¼Û¸ñ×Ü¼Æ:£¤</b></td>
-			   </tr>
+              </c:forEach>
+			  <tr>
+			    <td colspan="3" align="right">
+			    	<b>å•†å“ä»·æ ¼æ€»è®¡:ï¿¥
+			    		<span style="color:blue;">${totalPrice}</span>
+			    	å…ƒ</b>
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td colspan="3" align="center">
+			  		<br/><br/><br/>
+			  		<input type="button" value="æäº¤è®¢å•" 
+			  		onClick="window.location.href='${pageContext.request.contextPath}/order/commitorder.html';"/>
+			  	</td>
+			  </tr>
             </table>
             </center>
           </td>
         </tr>
-        <form action="CartServlet" method="post" name="mfrec">
-        <tr align="center">
-          <td><br/>ÊÕ»õÈËĞÕÃû:&nbsp;<input name="recname" value="<%= recMsg[0] %>"/></td>
-        </tr>
-        <tr align="center">
-          <td><br/>ÊÕ»õÈËµØÖ·:&nbsp;<input name="recadr" value="<%= recMsg[1] %>"/></td>
-        </tr>
-        <tr align="center">
-          <td><br/>ÊÕ»õÈËµç»°:&nbsp;<input name="rectel" value="<%= recMsg[2] %>"/></td>
-        </tr>
-        <tr align="center">
-          <td>
-          	<input type="hidden" name="action" value="recModify"/>
-            <br/><input type="button" value="ÊÕ»õÈËĞÅÏ¢ĞŞ¸Ä" onclick="checkMsg()"/>&nbsp;&nbsp;&nbsp;
-            <a href="CartServlet?action=orderConfirm">¶©µ¥È·ÈÏ</a>
-          </td>
-        </tr>     
-        </form>
       </table>
-    </center>
   </body>
 </html>
-<%-- <% 
-	}
- %> --%>

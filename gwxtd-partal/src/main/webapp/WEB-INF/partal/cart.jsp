@@ -1,110 +1,118 @@
-<%@ page contentType="text/html;charset=gb2312" %>
-
+<%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
   <head>
-    <title>ÎÒµÄÉÌ³Ç</title>
-	<script language="javascript" src="script/trim.js"></script>
-    <script language="javascript">
-    	function checkNum(num)
-    	{
-    		var reg = /^[1-9][0-9]*$/;
-    		if(reg.test(num.trim()))
-    		{
-    			return true;
-    		}
-    		else
-    		{
-    			alert("ÉÌÆ·ÊıÁ¿Ö»ÄÜÎªÊı×ÖÇÒ²»ÄÜÎª0£¡£¡£¡");
-    			return false;
-    		}
-    	}
+    <title>æˆ‘çš„å•†åŸ</title>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/res/script/trim.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/res/script/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+	    function deleteItem(gid){
+			if(confirm("æ‚¨ç¡®å®šåˆ é™¤å—ï¼Ÿ")){
+				window.location.href = "${pageContext.request.contextPath}/cart/delete.html?gid="+gid;
+			}
+		}
+		function enterNumber(gid,index){
+			var number = prompt("è¯·è¾“å…¥å•†å“æ•°é‡ï¼š","");
+			if(number!=null&&number.trim()!=''){
+				var reg = /^[1-9][0-9]*$/;
+				if(!reg.test(number.trim())){
+					alert('å•†å“æ•°é‡åªèƒ½ä¸ºæ•°å­—ä¸”ä¸èƒ½ä¸º0!!!');
+				}else{
+					$(function(){
+						$.ajax({
+							url:"${pageContext.request.contextPath}/cart/updateNum.html",
+							data:{"gid":gid,"num":number},
+							type:"post",
+							dataType:"json",
+							success:function(result){
+								if(result.stocknum!=''){
+									alert("å¯¹ä¸èµ·ï¼Œåº“å­˜é‡åªæœ‰ï¼š"+result.stocknum);
+								}else{
+									document.getElementById("gnum"+index).value = number;
+									total();
+								}
+							}
+						});
+			    	});
+				}
+			}
+		}
+		function total(){
+			var totalPrice = 0;
+			for(var i=0;i<'${fn:length(cartList)}';i++){
+				var price = document.getElementById('gprice'+i).innerText;
+				var num = document.getElementById('gnum'+i).value;
+				totalPrice += price*num;
+			}
+			document.getElementById('totalPrice').innerText = totalPrice;
+		}
     </script>
   </head>
-  <body>
-    <center>
+  <body onload="total();">
     <table width="100%">
       <tr>
         <td><%@ include file="top.jsp" %></td>
       </tr>
-      <tr align="center">
+      <tr>
         <td>
-        <%-- <% 
-    	if(mycart.getCart().size()==0)
-    	{
-    		out.println("<b>Äã»¹Ã»ÓĞ¹ºÂòÉÌÆ·</b>");
-    	}
-    	else
-    	{
-         %> --%>
-	        <table border="0" width="100%">
-	         <tr>
-	        	<th>ÉÌÆ·Ãû³Æ</th>
-	        	<th>ÉÌÆ·¼Û¸ñ</th>
-	        	<th>ÉÌÆ·ÊıÁ¿</th>
-	        	<th>É¾³ı</th>
-	      	</tr>
-			<%-- <% 
-				Vector<String[]> vgoods = mycart.getCartContent();
-				int i = 0;
-				for(String[] arr:vgoods)
-				{
-					i++;
-					if(i%2==0)
-					{
-						out.println("<tr align='center'>");
-					}
-					else
-					{
-						out.println("<tr align='center' bgcolor='#F5F9FE'>");
-					}
-			%> --%>
-				  <td align="left"><%-- <%= arr[0] %> --%></td>
-				  <td>£¤<%-- <%= arr[1] %> --%></td>
-				  <form action="CartServlet" method="post"
-				  		onsubmit="return checkNum(document.all.gnum<%-- <%= arr[3] %> --%>.value);">
-				  <td>
-				    <!--<input type="text" id="gnum" name="gnum" value="" size="10"/>-->
-				    <input type="submit" value="ĞŞ¸Ä"/>
-				    <input type="hidden" name="gid" value="<%-- <%= arr[3]%> --%>"/>
-				    <input type="hidden" name="action" value="changeNum"/>
-				  </td>
-				  </form>
-				  <td><a href="CartServlet?action=delete&gid=<%-- <%= arr[3]%> --%>">É¾³ı</a></td>
-				</tr>
-			<%-- <%
-				}
-			 %> --%>
-			   <tr>
-			     <td colspan="2"></td>
-			     <td align="center"><b>ÉÌÆ·¼Û¸ñ×Ü¼Æ:£¤</b></td>
-			     <td align="center">
-			     <%-- <% 
-			     	if(session.getAttribute("recMsg")==null)
-			     	{
-			      %> --%>
-			       <a href="CartServlet?action=balance">
-			         <img src="img/other/balance.gif" border="0"/>
-			       </a>
-			     <%--  <% 
-			      	}
-			      	else
-			      	{
-			       %> --%>
-			       <a href="order.jsp">
-			         <img src="img/other/balance.gif" border="0"/>
-			       </a>			       	
-			       <%-- <% 
-			       	}
-			        %> --%>
-			     </td>
-			   </tr>
-	        </table>
-        <%-- <% 
-        	}
-         %>     --%> 
+        	<c:choose>
+        		<c:when test="${!empty cartList}">
+        			<table border="0" width="100%" cellpadding="2px" cellspacing="0px">
+			         <tr>
+			        	<th>å•†å“åç§°</th>
+			        	<th>å•†å“ä»·æ ¼</th>
+			        	<th>å•†å“æ•°é‡</th>
+			        	<th>åˆ é™¤</th>
+			      	 </tr>
+			      	 <c:forEach items="${cartList}" var="item" varStatus="vs">
+			      	 	<c:choose>
+			      	 		<c:when test="${vs.index%2==0}">
+			      	 			<tr bgcolor="#F5F9FE">
+			      	 		</c:when>
+			      	 		<c:otherwise>
+			      	 			<tr>
+			      	 		</c:otherwise>
+			      	 	</c:choose>
+			      			<td align="left">${item.gname}</td>
+			      			<td align="center">ï¿¥
+			      				<span id="gprice${vs.index}">${item.gprice}</span>
+			      			</td>
+			      			<td align="center">
+							    <input type="text" id="gnum${vs.index}" name="gnum" 
+							    value="${item.buynum}" size="1" readonly="readonly"/>
+							    <input type="button" onClick="enterNumber('${item.gid}','${vs.index}');" value="ä¿®æ”¹"/>
+						  	</td>
+			      			<td align="center">
+			      				<a href="javascript:void(0)" onClick="deleteItem('${item.gid}');">åˆ é™¤</a>
+			      			</td>
+			      		</tr>
+			      	 </c:forEach>
+	      			</table>
+	      			<div style="margin-top:15px;margin-left:1250px;">
+	      				<a href="${pageContext.request.contextPath}/cart/clearCart.html">æ¸…ç©ºè´­ç‰©è½¦</a>
+	      			</div>
+	      			<div style="margin-top:20px;margin-left:1000px;">
+	      				<span>å•†å“ä»·æ ¼æ€»è®¡:ï¿¥<strong id="totalPrice">0.00</strong>å…ƒ</span>
+	      				<br/><br/>
+			       		<a href="${pageContext.request.contextPath}/order/receiverinfo.html">
+			         		<img src="${pageContext.request.contextPath}/res/img/other/balance.gif" border="0"/>
+			       		</a>
+	      			</div>
+        		</c:when>
+        		<c:otherwise>
+        			<table border="0" width="100%">
+        				<tr>
+        					<td align="center">
+        						<br/><br/><br/>
+        						<strong>æ‚¨è¿˜æ²¡æœ‰è´­ä¹°å•†å“</strong>
+        					</td>
+        				</tr>
+        			</table>
+        		</c:otherwise>
+        	</c:choose>
         </td>
       </tr>
-    </table>    
-    </center>
+    </table>
   </body>
 </html>

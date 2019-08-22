@@ -38,10 +38,12 @@
       <td>
         <input type="button" id="denglu" name="denglu" value="登录" onclick="fcheck()"/>
       </td>
-      <td><input type="reset" id="zhuce" name="zhuce" value="重置"/></td>
+      <td><input type="reset" id="resetting" name="resetting" value="重置"/></td>
     </tr>
     <tr align="right">
-      <td colspan="2"><a href="${pageContext.request.contextPath}/register.html">[新用户注册]</a></td>
+      <td colspan="2">
+      	<a href="${pageContext.request.contextPath}/register.html">[新用户注册]</a>
+      </td>
     </tr>
   </table>
   </center>

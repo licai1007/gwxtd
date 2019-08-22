@@ -27,6 +27,7 @@ public class UserController {
 			request.setAttribute("msg","对不起,登录失败,请重新登录!!!");
 			link = "error";
 		}else{
+			user.setUid(ur.getUid());
 			user.setUemail(ur.getUemail());
 			request.getSession().setAttribute("ur",user);
 			link = "index";
@@ -97,6 +98,9 @@ public class UserController {
 		User user1 = new User(ur.getUname(),user.getUpwd(),user.getUemail());
 		boolean flag = userService.modifyUserByUname(user,ur.getUname());
 		if(flag){
+			//设置提示信息页面是否显示返回按钮
+			model.addAttribute("flag","isExist");
+			
 			model.addAttribute("msg","恭喜您,信息修改成功!!!");
 			session.setAttribute("ur",user1);
 		}else{

@@ -18,7 +18,7 @@
 	 <center>
 	   <font color="red" size="12">${msg}</font>
 	   <br/><br/>
-	   <c:if test="${msg != '恭喜您,信息修改成功!!!'}">
+	   <c:if test="${flag != 'isExist'}">
 	   	<a href="javascript:history.back()">单击这里返回</a>
 	   </c:if>
 	   &nbsp;&nbsp;&nbsp;&nbsp;
