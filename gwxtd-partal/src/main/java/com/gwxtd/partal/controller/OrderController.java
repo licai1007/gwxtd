@@ -90,7 +90,7 @@ public class OrderController {
 		HttpSession session = request.getSession();
 		Order order = new Order();
 		order.setOdate(new Date());
-		order.setOstate("待付款");
+		order.setOstate("未发货");
 		@SuppressWarnings("unchecked")
 		Map<String,String> info = (Map<String,String>)session.getAttribute("addressInfo");
 		order.setOrecname(info.get("name"));

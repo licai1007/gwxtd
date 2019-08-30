@@ -32,8 +32,18 @@ public class OrderGoods implements Serializable {
      * 商品总价
      */
     private Double ogtotalprice;
+    //商品名称
+    private String gname;
 
-    private static final long serialVersionUID = 1L;
+    public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public Integer getOgid() {
         return ogid;

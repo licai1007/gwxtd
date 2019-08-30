@@ -9,11 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gwxtd.core.dao.GoodsMapper;
 import com.gwxtd.core.dao.OrderGoodsMapper;
 import com.gwxtd.core.dao.OrderMapper;
+import com.gwxtd.core.dao.UserMapper;
 import com.gwxtd.core.pojo.Goods;
 import com.gwxtd.core.pojo.GoodsCriteria;
 import com.gwxtd.core.pojo.Order;
+import com.gwxtd.core.pojo.OrderCriteria;
 import com.gwxtd.core.pojo.OrderGoods;
+import com.gwxtd.core.pojo.OrderGoodsCriteria;
+import com.gwxtd.core.pojo.User;
 import com.gwxtd.core.service.OrderService;
+import com.qingniao.common.page.PageInfo;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService{
@@ -23,6 +28,8 @@ public class OrderServiceImpl implements OrderService{
 	private OrderGoodsMapper orderGoodsMapper;
 	@Autowired
 	private GoodsMapper goodsMapper;
+	@Autowired
+	private UserMapper userMapper;
 	@Override
 	public boolean saveOrder(Order order,List<Goods> goodss){
 		try {
@@ -38,13 +45,6 @@ public class OrderServiceImpl implements OrderService{
 				double totalPrice = goods.getGprice()*(goods.getBuynum().intValue());
 				record.setOgtotalprice(totalPrice);
 				orderGoodsMapper.insertSelective(record);
-				
-				//修改库存
-				int amount = goods.getGamount().intValue()-goods.getBuynum();
-				goods.setGamount(amount);
-				GoodsCriteria example = new GoodsCriteria();
-				example.createCriteria().andGidEqualTo(goods.getGid());
-				goodsMapper.updateByExample(goods,example);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,5 +54,57 @@ public class OrderServiceImpl implements OrderService{
 		//订单记录成功
 		return true;
 	}
+	@Override
+	public PageInfo orderShow(OrderCriteria orderCriteria) {
+		int totalCount = orderMapper.countByExample(orderCriteria);
+		List<Order> orders = orderMapper.selectByExample(orderCriteria);
+		for(Order order:orders){
+			User user = userMapper.selectByPrimaryKey(order.getUid());
+			order.setUname(user.getUname());
+		}
+		PageInfo pageInfo = new PageInfo(orderCriteria.getPageNo(),orderCriteria.getPageSize(),totalCount,orders);
+		orderCriteria.setPageNo(pageInfo.getPageNo());//矫正当前页
+		return pageInfo;
+	}
+	@Override
+	public Order selectOrderById(Integer oid) {
+		return orderMapper.selectByPrimaryKey(oid);
+	}
+	@Override
+	public boolean deleteById(Integer oid) {
+		try {
+			OrderGoodsCriteria example = new OrderGoodsCriteria();
+			example.createCriteria().andOidEqualTo(oid);
+			orderGoodsMapper.deleteByExample(example);
+			orderMapper.deleteByPrimaryKey(oid);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public boolean delivery(Order order) {
+		try {
+			orderMapper.updateByPrimaryKeySelective(order);
+			//修改库存
+			OrderGoodsCriteria criteria = new OrderGoodsCriteria();
+			criteria.createCriteria().andOidEqualTo(order.getOid());
+			List<OrderGoods> orderGoodss = orderGoodsMapper.selectByExample(criteria);
+			for(OrderGoods orderGoods:orderGoodss){
+				Goods goods = goodsMapper.selectByPrimaryKey(orderGoods.getGid());
+				int amount = goods.getGamount().intValue()-orderGoods.getOgamount();
+				goods.setGamount(amount);
+				GoodsCriteria example = new GoodsCriteria();
+				example.createCriteria().andGidEqualTo(orderGoods.getGid());
+				goodsMapper.updateByExample(goods,example);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
 	
 }

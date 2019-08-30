@@ -23,7 +23,7 @@ public class OrderCriteria {
         oredCriteria = new ArrayList<Criteria>();
     }
 
-    public void setOrderByClause(String orderByClause) {
+	public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 

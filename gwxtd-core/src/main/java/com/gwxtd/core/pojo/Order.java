@@ -48,8 +48,18 @@ public class Order implements Serializable {
      * 订购总价
      */
     private Double ototalprice;
+    //订购人名字
+    private String uname;
 
-    private static final long serialVersionUID = 1L;
+    public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public Integer getOid() {
         return oid;

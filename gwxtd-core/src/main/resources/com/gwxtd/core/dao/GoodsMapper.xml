@@ -150,7 +150,7 @@
       #{gimgurl,jdbcType=VARCHAR}, #{glook,jdbcType=INTEGER}, #{gintro,jdbcType=LONGVARCHAR}, 
       #{gbrief,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.gwxtd.core.pojo.GoodsWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.gwxtd.core.pojo.GoodsWithBLOBs" useGeneratedKeys="true" keyProperty="gid">
     insert into goodsinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="gid != null" >
