@@ -54,7 +54,90 @@ public class Goods implements Serializable {
     //购买数量
     private Integer buynum;
     
-    public Integer getBuynum() {
+    private int favcomRate;//好评率
+    
+    private String imgUrls;//多张图片
+    
+    private int ifSaleOneself;//是否自营
+    
+    private String typeList;//版本
+    
+    private long recomProductId;//推荐商品id
+    
+    private String recomProduct;//推荐商品标题
+    
+    private Integer sid;
+    private String storeName;
+    
+    public Integer getSid() {
+		return sid;
+	}
+
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+	public String getImgUrls() {
+		return imgUrls;
+	}
+
+	public void setImgUrls(String imgUrls) {
+		this.imgUrls = imgUrls;
+	}
+
+	public int getIfSaleOneself() {
+		return ifSaleOneself;
+	}
+
+	public void setIfSaleOneself(int ifSaleOneself) {
+		this.ifSaleOneself = ifSaleOneself;
+	}
+
+	public String getTypeList() {
+		return typeList;
+	}
+
+	public void setTypeList(String typeList) {
+		this.typeList = typeList;
+	}
+
+	public long getRecomProductId() {
+		return recomProductId;
+	}
+
+	public void setRecomProductId(long recomProductId) {
+		this.recomProductId = recomProductId;
+	}
+
+	public String getRecomProduct() {
+		return recomProduct;
+	}
+
+	public void setRecomProduct(String recomProduct) {
+		this.recomProduct = recomProduct;
+	}
+
+	public void setGbrief(String gbrief) {
+		this.gbrief = gbrief;
+	}
+
+	public int getFavcomRate() {
+		return favcomRate;
+	}
+
+	public void setFavcomRate(int favcomRate) {
+		this.favcomRate = favcomRate;
+	}
+
+	public Integer getBuynum() {
 		return buynum;
 	}
 

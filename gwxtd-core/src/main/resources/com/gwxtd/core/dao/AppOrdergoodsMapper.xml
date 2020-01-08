@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwxtd.core.dao.AppOrdergoodsMapper" >
+	<insert id="insert" parameterType="com.gwxtd.core.appbean.AppOrdergoods">
+		insert into ordergoods(OId,uId,gId,oGamount,oGtotalprice,productType) 
+		values(#{OId},#{uId},#{gId},#{oGamount},#{oGtotalprice},#{productType})
+	</insert>
+</mapper>

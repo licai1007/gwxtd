@@ -3,8 +3,12 @@ package com.gwxtd.core.appbean;
 public class RResult {
 	private boolean success;
 	private String errorMsg;
-	private String result;
-	public RResult(boolean success, String errorMsg, String result) {
+	private Object result;
+	
+	public RResult() {
+		super();
+	}
+	public RResult(boolean success, String errorMsg, Object result) {
 		super();
 		this.success = success;
 		this.errorMsg = errorMsg;
@@ -22,10 +26,10 @@ public class RResult {
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
 	}
-	public String getResult() {
+	public Object getResult() {
 		return result;
 	}
-	public void setResult(String result) {
+	public void setResult(Object result) {
 		this.result = result;
 	}
 	

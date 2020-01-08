@@ -3,12 +3,13 @@
 <html>
 <head>
 	<title>class</title>
+	<!-- <base target="_blank"/> 每次都会打开一个新的窗口-->
 </head>
 <body>
 <center>
 <table border="0" width="80%" bgcolor="#FFE3C8" height="90%">
   <tr align="center">
-    <td><a href="adlogin.jsp">商品管理</a></td>
+    <td><a href="http://localhost:8080/gwxtd-console/login.do" target="_blank">商品管理</a></td>
   </tr>
   <tr align="center">
     <td>商品分类</td>

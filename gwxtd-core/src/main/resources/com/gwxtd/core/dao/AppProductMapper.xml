@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwxtd.core.dao.AppProductMapper" >
+	<select id="getList" parameterType="com.gwxtd.core.appbean.SProductList" resultType="com.gwxtd.core.pojo.Goods">
+		SELECT gId,gPrice,gName,gImgUrl,favcomRate 
+		FROM goodsinfo 
+		WHERE categoryId=#{categoryId}
+		AND deliverChoose=#{deliverChoose}
+		<if test="brandId!=0">
+			AND brandId=#{brandId}
+		</if>
+		<if test="filterType == 2">
+			AND isNew = 1
+		</if>
+		<if test="maxPrice!=0">
+			<![CDATA[AND gPrice >= #{minPrice}]]>
+			<![CDATA[AND gPrice <= #{maxPrice}]]>
+		</if>
+		<if test="sortType != 0">
+			<choose>
+				<when test="sortType == 1">
+					ORDER BY salesVolume DESC
+				</when>
+				<when test="sortType == 2">
+					ORDER BY gPrice DESC
+				</when>
+				<when test="sortType == 3">
+					ORDER BY gPrice ASC
+				</when>
+			</choose>
+		</if>
+	</select>
+	<select id="getById" parameterType="java.lang.Integer" resultType="com.gwxtd.core.pojo.Goods">
+		select * from goodsinfo where gid=#{gid}
+	</select>
+</mapper>

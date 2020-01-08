@@ -50,8 +50,28 @@ public class Order implements Serializable {
     private Double ototalprice;
     //订购人名字
     private String uname;
+    //订单编号
+    private String orderNum;
+    //是否支付
+    private boolean paid;
+    
+    public boolean isPaid() {
+		return paid;
+	}
 
-    public String getUname() {
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+
+	public String getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public String getUname() {
 		return uname;
 	}
 

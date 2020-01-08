@@ -356,4 +356,15 @@
   <select id="getGclass" resultType="String" >
   	select distinct gClass from goodsinfo
   </select>
+  <select id="selectByProductId" parameterType="java.lang.Integer" resultType="com.gwxtd.core.pojo.Goods">
+  	select * from goodsinfo,appstore where goodsinfo.sid=appstore.storeId and gid=#{gid}
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
 </mapper>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwxtd.core.dao.AppOrderMapper" >
+	<insert id="insertOrder" parameterType="com.gwxtd.core.appbean.AppOrder" useGeneratedKeys="true" keyProperty="oId">
+		insert into orderinfo(orderNum,oDate,aId,oState,oRecname,oRecadr,oRectel,uId,oTotalPrice,payWay) 
+		values(#{orderNum},#{oDate},#{aId},#{oState},#{oRecname},#{oRecadr},#{oRectel},#{uId},#{oTotalPrice},#{payWay})
+	</insert>
+</mapper>

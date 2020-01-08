@@ -8,6 +8,7 @@
     <result column="gId" property="gid" jdbcType="INTEGER" />
     <result column="oGamount" property="ogamount" jdbcType="INTEGER" />
     <result column="oGtotalprice" property="ogtotalprice" jdbcType="DOUBLE" />
+    <result column="productType" property="productType" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >

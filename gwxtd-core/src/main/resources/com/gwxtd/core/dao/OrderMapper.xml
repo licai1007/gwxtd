@@ -11,6 +11,8 @@
     <result column="oRectel" property="orectel" jdbcType="VARCHAR" />
     <result column="uId" property="uid" jdbcType="INTEGER" />
     <result column="oTotalPrice" property="ototalprice" jdbcType="DOUBLE" />
+    <result column="orderNum" property="orderNum" jdbcType="VARCHAR" />
+    <result column="paid" property="paid"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -97,7 +99,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
-    oId,oDate,aId,oState,oRecname,oRecadr,oRectel,uId,oTotalPrice
+    oId,oDate,aId,oState,oRecname,oRecadr,oRectel,uId,oTotalPrice,orderNum
     from orderinfo
     where oId = #{oid,jdbcType=INTEGER}
   </select>
@@ -279,5 +281,23 @@
       uId = #{uid,jdbcType=INTEGER},
       oTotalPrice = #{ototalprice,jdbcType=DOUBLE}
     where oId = #{oid,jdbcType=INTEGER}
+  </update>
+  <select id="getDateByOgid" parameterType="int" resultType="java.util.Date">
+  	select i.oDate from ordergoods o,orderinfo i where o.OId=i.oId and o.oGid=#{oGid}
+  </select>
+  <select id="getOrderByStatus" resultType="com.gwxtd.core.pojo.Order">
+  	select * from orderinfo where uId=#{uid}
+  	<if test="ostate!='所有订单'">
+  	 and oState=#{ostate}
+  	</if>
+  </select>
+  <select id="getCountByStatus" resultType="int">
+  	select count(1) from orderinfo where uId=#{uid} and oState=#{ostate}
+  </select>
+  <select id="getOrderImg" parameterType="java.lang.Integer" resultType="java.lang.String">
+  	select gImgUrl from goodsinfo where gId=any(select gId from ordergoods where OId=#{oid});
+  </select>
+  <update id="confirmOrder" parameterType="java.lang.Integer">
+  	update orderinfo set oState='完成交易' where oId=#{oid};
   </update>
 </mapper>

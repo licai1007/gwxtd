@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwxtd.core.dao.AppReceiverMapper" >
+	<select id="select" resultType="com.gwxtd.core.appbean.RReceiver">
+		select * from appreceiver where userId=#{userId}
+		<if test="isDefault != null">
+			 and isDefault=#{isDefault}
+		</if>
+	</select>
+	<insert id="insert" parameterType="com.gwxtd.core.appbean.RReceiver">
+		insert into appreceiver(isDefault,receiverName,receiverAddress,receiverPhone,userId) 
+		values(#{isDefault},#{receiverName},#{receiverAddress},#{receiverPhone},#{userId})
+	</insert>
+	<select id="selectById" parameterType="int" resultType="com.gwxtd.core.appbean.RReceiver">
+		select * from appreceiver where id=#{id}
+	</select>
+</mapper>

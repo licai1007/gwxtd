@@ -2,15 +2,10 @@ package com.gwxtd.partal.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.alibaba.fastjson.JSON;
-import com.gwxtd.core.appbean.RResult;
 import com.gwxtd.core.pojo.User;
 import com.gwxtd.core.service.UserService;
 
@@ -34,20 +29,7 @@ public class UserController {
 		}
 		return link;
 	}
-	@RequestMapping(value="/loginApp.html",produces="text/html;charset=UTF-8")
-	@ResponseBody
-	public String loginApp(User user){
-		User ur = userService.selectUser(user);
-		RResult rResult = null;
-		if(ur!=null){
-			rResult = new RResult(true,"","");
-		}else{
-			rResult = new RResult(false,"用户名或密码错误!","");
-		}
-		String jsonString = JSON.toJSONString(rResult);
-		System.out.println("jsonString:"+jsonString);
-		return jsonString;
-	}
+	
 	@RequestMapping("/register.html")
 	public String register(User user,Model model,HttpSession session){
 		User user1 = new User(user.getUname(),user.getUpwd(),user.getUemail());
@@ -69,24 +51,7 @@ public class UserController {
 		
 		return url;
 	}
-	@RequestMapping(value="/registerApp.html",produces="text/html;charset=UTF-8")
-	@ResponseBody
-	public String registerApp(User user){
-		User ur = userService.selectUserByUname(user.getUname());
-		RResult rResult = null;
-		if(ur == null){
-			boolean flag = userService.userRegister(user);
-			if(flag){
-				rResult = new RResult(true,"","");
-			}else{
-				rResult = new RResult(false,"对不起,注册失败!","");
-			}
-		}else{
-			rResult = new RResult(false,"对不起,该用户名已经存在!","");
-		}
-		String jsonString = JSON.toJSONString(rResult);
-		return jsonString;
-	}
+	
 	@RequestMapping("/logout.html")
 	public String logout(HttpSession session){
 		session.removeAttribute("ur");
@@ -108,26 +73,5 @@ public class UserController {
 		}
 		return "error";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }

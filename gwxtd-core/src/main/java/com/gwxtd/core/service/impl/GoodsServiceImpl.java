@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gwxtd.core.appbean.RShopCar;
 import com.gwxtd.core.dao.GoodsBackupMapper;
 import com.gwxtd.core.dao.GoodsMapper;
 import com.gwxtd.core.pojo.Goods;
@@ -83,6 +84,19 @@ public class GoodsServiceImpl implements GoodsService {
 			return false;
 		}
 		return true;
+	}
+	@Override
+	public RShopCar selectByProductId(Integer gid) {
+		Goods goods = goodsMapper.selectByProductId(gid);
+		RShopCar shopCar = new RShopCar();
+		shopCar.setPid(goods.getGid());
+		shopCar.setPname(goods.getGname());
+		shopCar.setPimageUrl(goods.getGimgurl());
+		shopCar.setPprice(goods.getGprice());
+		shopCar.setStockCount(goods.getGamount());
+		shopCar.setStoreId(goods.getSid());
+		shopCar.setStoreName(goods.getStoreName());
+		return shopCar;
 	}
 
 }

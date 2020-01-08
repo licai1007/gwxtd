@@ -3,7 +3,9 @@ package com.gwxtd.core.dao;
 import com.gwxtd.core.pojo.Goods;
 import com.gwxtd.core.pojo.GoodsCriteria;
 import com.gwxtd.core.pojo.GoodsWithBLOBs;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodsMapper {
@@ -36,4 +38,10 @@ public interface GoodsMapper {
     int updateByPrimaryKey(Goods record);
     
     List<String> getGclass();
+    
+    //app购物车详情
+    Goods selectByProductId(Integer gid);
+    
+    
+ 
 }

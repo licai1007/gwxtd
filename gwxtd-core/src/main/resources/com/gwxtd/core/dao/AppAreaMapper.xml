@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwxtd.core.dao.AppAreaMapper" >
+	<select id="selectAll" resultType="com.gwxtd.core.appbean.Province">
+		select PROVINCE_CODE,PROVINCE_NAME from bs_province
+	</select>
+	<select id="selectCityByParentCode" parameterType="java.lang.String" resultType="com.gwxtd.core.appbean.City">
+		select CITY_CODE,CITY_NAME from bs_city where PROVINCE_CODE=#{parentCode}
+	</select>
+	<select id="selectAreaByParentCode" parameterType="java.lang.String" resultType="com.gwxtd.core.appbean.Area">
+		select AREA_CODE,AREA_NAME from bs_area where CITY_CODE=#{parentCode}
+	</select>
+</mapper>

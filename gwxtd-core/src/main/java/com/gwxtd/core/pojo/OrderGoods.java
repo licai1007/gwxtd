@@ -34,6 +34,8 @@ public class OrderGoods implements Serializable {
     private Double ogtotalprice;
     //商品名称
     private String gname;
+    
+    private String productType;
 
     public String getGname() {
 		return gname;
@@ -92,8 +94,16 @@ public class OrderGoods implements Serializable {
     public void setOgtotalprice(Double ogtotalprice) {
         this.ogtotalprice = ogtotalprice;
     }
+    
+    public String getProductType() {
+		return productType;
+	}
 
-    @Override
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

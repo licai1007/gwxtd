@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwxtd.core.dao.AppCommentMapper" >
+	<select id="getListByPid" parameterType="int" resultType="com.gwxtd.core.appbean.Comment">
+		select * from appcomment a,userinfo u,ordergoods o 
+		where a.uid=u.uId and a.ogid=o.oGid
+		and pid=#{pid} 
+		<if test="type != 0">
+			and type=#{type} 
+		</if>
+		<if test="isImg != 0">
+			and isImg=#{isImg}
+		</if>
+	</select>
+	<select id="countByPid" parameterType="int" resultType="int">
+		select count(1) from appcomment where pid=#{pid} 
+		<if test="type != 0">
+			and type=#{type} 
+		</if>
+		<if test="isImg != 0">
+			and isImg=#{isImg}
+		</if>
+	</select>
+</mapper>
